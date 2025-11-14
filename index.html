@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -13,6 +12,26 @@
     <style>
       body {
         font-family: 'Poppins', sans-serif;
+      }
+      .faq-answer {
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out, opacity 0.3s ease-out;
+        max-height: 0;
+        overflow: hidden;
+        padding-top: 0;
+        padding-bottom: 0;
+        opacity: 0;
+      }
+      .faq-question.open + .faq-answer {
+        max-height: 500px; /* Adjust as needed */
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        opacity: 1;
+      }
+      .faq-icon {
+        transition: transform 0.3s ease-out;
+      }
+      .faq-question.open .faq-icon {
+        transform: rotate(180deg);
       }
     </style>
   <script type="importmap">

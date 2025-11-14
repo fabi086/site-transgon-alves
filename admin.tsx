@@ -5,9 +5,30 @@ interface ImageData {
   alt: string;
 }
 
+interface AboutData {
+  title: string;
+  paragraphs: string[];
+  image: ImageData;
+}
+
+interface Testimonial {
+  name: string;
+  role: string;
+  text: string;
+  rating: number;
+}
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 interface DbData {
   heroBackgroundImage: string;
   galleryImages: ImageData[];
+  aboutSection: AboutData;
+  testimonials: Testimonial[];
+  faq: FaqItem[];
 }
 
 const AdminPage: React.FC = () => {
@@ -19,10 +40,9 @@ const AdminPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Appending a timestamp to bypass browser cache for db.json
         const response = await fetch('/db.json?' + new Date().getTime());
         if (!response.ok) {
-          throw new Error('Não foi possível carregar o arquivo db.json. Verifique se ele existe na raiz do projeto.');
+          throw new Error('Não foi possível carregar o arquivo db.json.');
         }
         const dbData: DbData = await response.json();
         setEditedData(dbData);
@@ -33,19 +53,47 @@ const AdminPage: React.FC = () => {
     fetchData();
   }, []);
   
-  const handleHeroChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueChange = (path: (string | number)[], value: any) => {
+    setEditedData(prevData => {
+        if (!prevData) return null;
+        const newData = JSON.parse(JSON.stringify(prevData)); // Deep copy
+        let current = newData;
+        for (let i = 0; i < path.length - 1; i++) {
+            current = current[path[i]];
+        }
+        current[path[path.length - 1]] = value;
+        return newData;
+    });
+  };
+
+  const addTestimonial = () => {
     if (editedData) {
-      setEditedData({ ...editedData, heroBackgroundImage: e.target.value });
+      const newTestimonials = [...editedData.testimonials, { name: "Novo Nome", role: "Nova Função", text: "Novo depoimento.", rating: 5 }];
+      setEditedData({ ...editedData, testimonials: newTestimonials });
     }
   };
 
-  const handleGalleryChange = (index: number, field: keyof ImageData, value: string) => {
+  const removeTestimonial = (index: number) => {
     if (editedData) {
-      const newGalleryImages = [...editedData.galleryImages];
-      newGalleryImages[index] = { ...newGalleryImages[index], [field]: value };
-      setEditedData({ ...editedData, galleryImages: newGalleryImages });
+      const newTestimonials = editedData.testimonials.filter((_, i) => i !== index);
+      setEditedData({ ...editedData, testimonials: newTestimonials });
     }
   };
+  
+  const addFaq = () => {
+     if (editedData) {
+      const newFaqs = [...editedData.faq, { question: "Nova Pergunta?", answer: "Nova resposta." }];
+      setEditedData({ ...editedData, faq: newFaqs });
+    }
+  };
+
+  const removeFaq = (index: number) => {
+    if (editedData) {
+      const newFaqs = editedData.faq.filter((_, i) => i !== index);
+      setEditedData({ ...editedData, faq: newFaqs });
+    }
+  };
+
 
   const handleGenerateJson = () => {
     if (editedData) {
@@ -62,7 +110,6 @@ const AdminPage: React.FC = () => {
         setTimeout(() => setCopySuccess(''), 2000);
       }, (err) => {
         setCopySuccess('Falha ao copiar!');
-        console.error('Could not copy text: ', err);
       });
     }
   };
@@ -71,31 +118,19 @@ const AdminPage: React.FC = () => {
     <div className="max-w-[1200px] mx-auto px-6 py-12">
        <div className="mb-8 text-center">
         <h1 className="text-4xl font-black text-lime-400 uppercase tracking-tighter">Painel Administrativo</h1>
-        <p className="text-lg text-gray-400 mt-2">Gerencie as imagens do seu site de forma visual.</p>
+        <p className="text-lg text-gray-400 mt-2">Gerencie o conteúdo do seu site de forma visual.</p>
         <a href="/#/" className="text-lime-400 hover:text-lime-300 mt-4 inline-block">&larr; Voltar para o site</a>
       </div>
       
       <div className="bg-zinc-800 p-8 rounded-lg border border-zinc-700 mb-12">
-        <h2 className="text-2xl font-bold text-white mb-4">Como Atualizar as Imagens</h2>
-        <div className="space-y-4 text-gray-300">
-          <ol className="list-decimal list-inside space-y-3">
-            <li>
-              <strong>Faça o upload da sua nova imagem:</strong> Use um serviço gratuito como o <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" className="text-lime-400 underline">Imgur</a> e copie o "Direct Link" da imagem (deve terminar com .jpg, .png, etc.).
-            </li>
-            <li>
-              <strong>Cole o novo link:</strong> Role para baixo e cole o novo link no campo de texto correspondente à imagem que você quer alterar. A pré-visualização será atualizada na hora.
-            </li>
-            <li>
-              <strong>Gere e copie o código:</strong> Após fazer suas alterações, clique no botão verde "Gerar Código de Atualização". Em seguida, clique em "Copiar Código".
-            </li>
-            <li>
-              <strong>Atualize o arquivo <code className="bg-zinc-900 text-lime-400 px-2 py-1 rounded">db.json</code>:</strong> Abra o arquivo no seu editor, apague TODO o conteúdo antigo e cole o novo código que você copiou.
-            </li>
-             <li>
-              <strong>Salve e publique novamente:</strong> Envie a nova versão do site para sua hospedagem. As novas imagens estarão no ar!
-            </li>
-          </ol>
-        </div>
+        <h2 className="text-2xl font-bold text-white mb-4">Como Atualizar o Conteúdo</h2>
+        <ol className="list-decimal list-inside space-y-3 text-gray-300">
+            <li>Altere os textos ou links nos campos abaixo. Para listas (Avaliações, Dúvidas), você pode adicionar ou remover itens.</li>
+            <li>Clique no botão verde "Gerar Código de Atualização".</li>
+            <li>Clique em "Copiar Código".</li>
+            <li>Abra o arquivo <code className="bg-zinc-900 text-lime-400 px-2 py-1 rounded">db.json</code>, apague TODO o conteúdo antigo e cole o novo código.</li>
+            <li>Salve e publique o site novamente para ver as alterações.</li>
+        </ol>
       </div>
       
       {error && <div className="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg">{error}</div>}
@@ -103,61 +138,77 @@ const AdminPage: React.FC = () => {
 
       {editedData && (
         <>
-        <div className="space-y-12">
+        <div className="space-y-16">
             {/* Hero Background Editor */}
             <div>
-              <h3 className="text-xl font-bold text-lime-400 mb-4">Imagem de Fundo (Principal)</h3>
+              <h3 className="text-2xl font-bold text-lime-400 mb-4 border-l-4 border-lime-400 pl-4">Imagem de Fundo (Principal)</h3>
               <div className="bg-zinc-800 p-4 rounded-lg grid md:grid-cols-2 gap-4 items-center">
                 <img src={editedData.heroBackgroundImage} alt="Pré-visualização" className="rounded-md max-h-64 w-full object-cover"/>
-                <div>
-                    <label htmlFor="hero-bg" className="block text-sm font-medium text-gray-300 mb-1">URL da Imagem</label>
-                    <input 
-                        type="text"
-                        id="hero-bg"
-                        value={editedData.heroBackgroundImage}
-                        onChange={handleHeroChange}
-                        className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200 focus:ring-lime-400 focus:border-lime-400"
-                    />
-                </div>
+                 <input type="text" value={editedData.heroBackgroundImage} onChange={(e) => handleValueChange(['heroBackgroundImage'], e.target.value)} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200 focus:ring-lime-400 focus:border-lime-400"/>
+              </div>
+            </div>
+
+            {/* About Section Editor */}
+            <div>
+              <h3 className="text-2xl font-bold text-lime-400 mb-4 border-l-4 border-lime-400 pl-4">Seção "Sobre Nós"</h3>
+              <div className="bg-zinc-800 p-6 rounded-lg space-y-4">
+                  <input type="text" value={editedData.aboutSection.title} onChange={(e) => handleValueChange(['aboutSection', 'title'], e.target.value)} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200 font-bold"/>
+                  <textarea value={editedData.aboutSection.paragraphs.join('\n\n')} onChange={(e) => handleValueChange(['aboutSection', 'paragraphs'], e.target.value.split('\n\n'))} rows={4} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200"/>
+                  <img src={editedData.aboutSection.image.src} alt="Pré-visualização" className="rounded-md max-h-64 w-full object-cover"/>
+                  <input type="text" value={editedData.aboutSection.image.src} onChange={(e) => handleValueChange(['aboutSection', 'image', 'src'], e.target.value)} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200"/>
               </div>
             </div>
 
             {/* Gallery Images Editor */}
             <div>
-              <h3 className="text-xl font-bold text-lime-400 mb-4">Galeria de Fotos ("Nossa Frota")</h3>
+              <h3 className="text-2xl font-bold text-lime-400 mb-4 border-l-4 border-lime-400 pl-4">Galeria de Fotos</h3>
               <div className="space-y-6">
                 {editedData.galleryImages.map((image, index) => (
                    <div key={index} className="bg-zinc-800 p-4 rounded-lg grid md:grid-cols-2 gap-6 items-center">
                         <img src={image.src} alt={image.alt} className="rounded-md w-full h-48 object-cover"/>
                         <div className="space-y-3">
-                             <div>
-                                <label htmlFor={`gallery-src-${index}`} className="block text-sm font-medium text-gray-300 mb-1">URL da Imagem</label>
-                                <input 
-                                    type="text"
-                                    id={`gallery-src-${index}`}
-                                    value={image.src}
-                                    onChange={(e) => handleGalleryChange(index, 'src', e.target.value)}
-                                    className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200 focus:ring-lime-400 focus:border-lime-400"
-                                />
-                            </div>
-                             <div>
-                                <label htmlFor={`gallery-alt-${index}`} className="block text-sm font-medium text-gray-300 mb-1">Texto Alternativo (Descrição)</label>
-                                <input 
-                                    type="text"
-                                    id={`gallery-alt-${index}`}
-                                    value={image.alt}
-                                    onChange={(e) => handleGalleryChange(index, 'alt', e.target.value)}
-                                    className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200 focus:ring-lime-400 focus:border-lime-400"
-                                />
-                            </div>
+                            <input type="text" value={image.src} onChange={(e) => handleValueChange(['galleryImages', index, 'src'], e.target.value)} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200" />
+                            <input type="text" value={image.alt} onChange={(e) => handleValueChange(['galleryImages', index, 'alt'], e.target.value)} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-gray-200" />
                         </div>
                    </div>
                 ))}
               </div>
             </div>
+            
+            {/* Testimonials Editor */}
+            <div>
+                <h3 className="text-2xl font-bold text-lime-400 mb-4 border-l-4 border-lime-400 pl-4">Avaliações de Clientes</h3>
+                <div className="space-y-4">
+                    {editedData.testimonials.map((item, index) => (
+                        <div key={index} className="bg-zinc-800 p-4 rounded-lg space-y-2 relative">
+                            <input type="text" value={item.name} onChange={(e) => handleValueChange(['testimonials', index, 'name'], e.target.value)} placeholder="Nome" className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 font-bold"/>
+                            <input type="text" value={item.role} onChange={(e) => handleValueChange(['testimonials', index, 'role'], e.target.value)} placeholder="Função" className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 text-sm"/>
+                            <textarea value={item.text} onChange={(e) => handleValueChange(['testimonials', index, 'text'], e.target.value)} placeholder="Depoimento" rows={3} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2"/>
+                            <input type="number" value={item.rating} onChange={(e) => handleValueChange(['testimonials', index, 'rating'], parseInt(e.target.value, 10))} min="1" max="5" className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2"/>
+                            <button onClick={() => removeTestimonial(index)} className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">&times;</button>
+                        </div>
+                    ))}
+                </div>
+                <button onClick={addTestimonial} className="mt-4 bg-lime-500/20 hover:bg-lime-500/40 text-lime-300 font-semibold py-2 px-4 rounded-lg">+ Adicionar Avaliação</button>
+            </div>
+            
+            {/* FAQ Editor */}
+            <div>
+                <h3 className="text-2xl font-bold text-lime-400 mb-4 border-l-4 border-lime-400 pl-4">Dúvidas Frequentes (FAQ)</h3>
+                <div className="space-y-4">
+                    {editedData.faq.map((item, index) => (
+                         <div key={index} className="bg-zinc-800 p-4 rounded-lg space-y-2 relative">
+                            <input type="text" value={item.question} onChange={(e) => handleValueChange(['faq', index, 'question'], e.target.value)} placeholder="Pergunta" className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2 font-bold"/>
+                            <textarea value={item.answer} onChange={(e) => handleValueChange(['faq', index, 'answer'], e.target.value)} placeholder="Resposta" rows={3} className="w-full bg-zinc-900 border border-zinc-700 rounded-md p-2"/>
+                            <button onClick={() => removeFaq(index)} className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">&times;</button>
+                        </div>
+                    ))}
+                </div>
+                <button onClick={addFaq} className="mt-4 bg-lime-500/20 hover:bg-lime-500/40 text-lime-300 font-semibold py-2 px-4 rounded-lg">+ Adicionar Pergunta</button>
+            </div>
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-16 text-center">
             <button
                 onClick={handleGenerateJson}
                 className="bg-lime-500 text-zinc-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-lime-400 transition-all duration-300 transform hover:scale-105"
@@ -171,13 +222,8 @@ const AdminPage: React.FC = () => {
                 <h3 className="text-lg font-bold text-white mb-2">Código Gerado</h3>
                 <p className="text-gray-400 mb-4">Copie este código e cole no seu arquivo <code className="bg-zinc-900 text-lime-400 px-2 py-1 rounded">db.json</code>.</p>
                 <div className="relative">
-                    <pre className="bg-zinc-900 text-white p-4 rounded-md overflow-x-auto max-h-96">
-                        <code>{generatedJson}</code>
-                    </pre>
-                    <button
-                        onClick={handleCopyJson}
-                        className="absolute top-2 right-2 bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-semibold py-1 px-3 rounded-md transition-colors"
-                    >
+                    <pre className="bg-zinc-900 text-white p-4 rounded-md overflow-x-auto max-h-96"><code>{generatedJson}</code></pre>
+                    <button onClick={handleCopyJson} className="absolute top-2 right-2 bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-semibold py-1 px-3 rounded-md transition-colors">
                        {copySuccess ? copySuccess : 'Copiar Código'}
                     </button>
                 </div>

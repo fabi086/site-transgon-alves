@@ -30,14 +30,22 @@ const Header: React.FC = () => {
 
     const navLinks = [
         { href: '#services', label: 'Serviços' },
+        { href: '#about', label: 'Sobre Nós' },
         { href: '#gallery', label: 'Nossa Frota' },
+        { href: '#testimonials', label: 'Avaliações' },
+        { href: '#faq', label: 'Dúvidas' },
         { href: '#contact', label: 'Contato' },
     ];
+
+    const handleLinkClick = (href: string) => {
+        setIsMenuOpen(false);
+        // This part is handled by the browser's native anchor link behavior
+    };
 
     return (
         <header className="bg-zinc-900/80 backdrop-blur-sm sticky top-0 z-50">
             <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
-                <a href="#" className="flex items-center gap-3 z-50" aria-label="Trans Gonçalves - Página Inicial">
+                <a href="/#/" className="flex items-center gap-3 z-50" aria-label="Trans Gonçalves - Página Inicial">
                     <HookIcon className="w-8 h-8 text-lime-400" />
                     <span className="text-2xl font-bold tracking-tighter text-white">
                         TG
@@ -69,14 +77,14 @@ const Header: React.FC = () => {
                 </div>
 
                  {/* Mobile Nav */}
-                <div className={`absolute top-0 left-0 w-full h-screen bg-zinc-900 transition-transform duration-300 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden`}>
+                <div className={`fixed top-0 left-0 w-full h-screen bg-zinc-900 transition-transform duration-300 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden`}>
                     <nav className="flex flex-col items-center justify-center h-full gap-8">
                         {navLinks.map(link => (
                             <a 
                                 key={link.href} 
                                 href={link.href} 
                                 className="text-3xl font-bold text-gray-300 hover:text-lime-400 transition-colors duration-300"
-                                onClick={() => setIsMenuOpen(false)}
+                                onClick={() => handleLinkClick(link.href)}
                             >
                                 {link.label}
                             </a>

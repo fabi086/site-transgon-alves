@@ -7,5 +7,54 @@
     { "src": "https://i.imgur.com/3TCoY8E.jpeg", "alt": "Caminhão com guindaste articulado em detalhes" },
     { "src": "https://i.imgur.com/9n21pAv.jpeg", "alt": "Frota de caminhões da Trans Gonçalves" },
     { "src": "https://i.imgur.com/3bV9pKw.jpeg", "alt": "Serviço de reboque 24 horas em ação" }
+  ],
+  "aboutSection": {
+    "title": "Sobre a Trans Gonçalves",
+    "paragraphs": [
+      "Com anos de experiência no mercado, a Trans Gonçalves se consolidou como referência em transportes pesados e serviços de munck em São Paulo. Nossa missão é oferecer soluções logísticas seguras, ágeis e eficientes, superando as expectativas de nossos clientes a cada serviço prestado.",
+      "Contamos com uma frota moderna e uma equipe altamente qualificada, pronta para atender suas necessidades 24 horas por dia, 7 dias por semana. Valorizamos a pontualidade, a segurança da sua carga e a transparência em todas as etapas do processo."
+    ],
+    "image": {
+      "src": "https://i.imgur.com/9n21pAv.jpeg",
+      "alt": "Equipe da Trans Gonçalves com caminhão"
+    }
+  },
+  "testimonials": [
+    {
+      "name": "João Silva",
+      "role": "Engenheiro Civil",
+      "text": "Serviço impecável! A equipe da Trans Gonçalves foi extremamente profissional e pontual no transporte de uma máquina pesada para nossa obra. Recomendo!",
+      "rating": 5
+    },
+    {
+      "name": "Maria Oliveira",
+      "role": "Gerente de Logística",
+      "text": "Contratamos o serviço de guincho 24h e o atendimento foi rápido e eficiente. O motorista foi muito cuidadoso com nosso veículo. Excelente!",
+      "rating": 5
+    },
+    {
+      "name": "Construtora Alfa",
+      "role": "Cliente Corporativo",
+      "text": "Parceiros de confiança para içamento de materiais em nossos canteiros de obras. A agilidade e segurança que eles oferecem são diferenciais no mercado.",
+      "rating": 5
+    }
+  ],
+  "faq": [
+    {
+      "question": "Quais áreas vocês atendem?",
+      "answer": "Atendemos toda a cidade de São Paulo, Grande São Paulo e regiões próximas. Para localidades mais distantes, entre em contato para avaliarmos a disponibilidade."
+    },
+    {
+      "question": "Vocês funcionam 24 horas mesmo?",
+      "answer": "Sim! Nossos serviços de guincho e transporte estão disponíveis 24 horas por dia, 7 dias por semana, incluindo feriados. Estamos sempre prontos para atender sua emergência."
+    },
+    {
+      "question": "Que tipo de carga vocês transportam?",
+      "answer": "Somos especializados no transporte de veículos, máquinas industriais, equipamentos de construção, contêineres e outras cargas pesadas e de grande porte. Consulte-nos sobre sua necessidade específica."
+    },
+    {
+      "question": "Como posso solicitar um orçamento?",
+      "answer": "Você pode solicitar um orçamento rápido e sem compromisso através do nosso WhatsApp, clicando em qualquer um dos botões 'Orçamento' no site, ou ligando diretamente para o nosso número de contato."
+    }
   ]
 }

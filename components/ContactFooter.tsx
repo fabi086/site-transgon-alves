@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -6,41 +6,131 @@ const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
+interface FormData {
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
+}
+
+interface FormErrors {
+    name?: string;
+    email?: string;
+    message?: string;
+}
+
 const ContactFooter: React.FC = () => {
-    const phoneNumber = "5511966887073";
-    const displayPhoneNumber = "(11) 96688-7073";
-    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Olá! Vi seu site e gostaria de um orçamento.")}`;
-    const year = new Date().getFullYear();
+    const phoneNumber = "5511941810939";
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Olá! Gostaria de um orçamento.")}`;
+    
+    const [formData, setFormData] = useState<FormData>({ name: '', email: '', phone: '', message: '' });
+    const [errors, setErrors] = useState<FormErrors>({});
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+    const validate = (): FormErrors => {
+        const newErrors: FormErrors = {};
+        if (!formData.name.trim()) newErrors.name = "O nome é obrigatório.";
+        if (!formData.email.trim()) {
+            newErrors.email = "O e-mail é obrigatório.";
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = "O formato do e-mail é inválido.";
+        }
+        if (!formData.message.trim()) newErrors.message = "A mensagem é obrigatória.";
+        return newErrors;
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (errors[name as keyof FormErrors]) {
+            setErrors(prev => ({ ...prev, [name]: undefined }));
+        }
+    };
+    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+        
+        setStatus('submitting');
+        setErrors({});
+
+        // Simulate API call
+        setTimeout(() => {
+            console.log("Form data submitted:", formData);
+            setStatus('success');
+            setFormData({ name: '', email: '', phone: '', message: '' });
+            setTimeout(() => setStatus('idle'), 4000);
+        }, 1500);
+    };
 
     return (
         <footer id="contact" className="bg-zinc-800 border-t-4 border-lime-400">
-            <div className="max-w-[1200px] mx-auto px-6 py-16 text-center">
-                <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Precisa de Ajuda?</h2>
-                <p className="text-lg text-gray-400 mt-2">Entre em contato conosco agora mesmo. Atendimento 24 horas!</p>
-                
-                <div className="my-10">
-                    <p className="text-gray-300 text-xl">Ligue ou chame no WhatsApp:</p>
-                    <a href={`tel:${displayPhoneNumber.replace(/\D/g, '')}`} className="text-4xl md:text-6xl font-black text-lime-400 my-2 inline-block hover:text-lime-300 transition-colors">
-                        {displayPhoneNumber}
-                    </a>
+            <div className="max-w-[1200px] mx-auto px-6 py-16">
+                <div className="grid md:grid-cols-2 gap-12">
+                    {/* Contact Info and CTA */}
+                    <div>
+                        <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Entre em Contato</h2>
+                        <p className="text-lg text-gray-400 mt-4 mb-8">
+                            Pronto para começar? Fale conosco agora mesmo ou preencha o formulário e retornaremos o mais breve possível.
+                        </p>
+                        <div className="space-y-4">
+                             <a href={`tel:${phoneNumber}`} className="flex items-center gap-4 text-gray-300 hover:text-lime-400 transition-colors">
+                                <span className="text-3xl font-bold">(11) 94181-0939</span>
+                            </a>
+                            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105">
+                                <WhatsAppIcon className="w-6 h-6" />
+                                <span>Chamar no WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Contact Form */}
+                    <div className="bg-zinc-900 p-8 rounded-lg">
+                       {status === 'success' ? (
+                            <div className="flex flex-col items-center justify-center h-full text-center">
+                                <h3 className="text-2xl font-bold text-lime-400">Mensagem Enviada!</h3>
+                                <p className="text-gray-300 mt-2">Obrigado por entrar em contato. Retornaremos em breve.</p>
+                            </div>
+                       ) : (
+                         <form onSubmit={handleSubmit} noValidate>
+                            <div className="space-y-4">
+                                <div>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-1">Nome</label>
+                                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className="w-full bg-zinc-800 border border-zinc-700 rounded-md p-3 text-gray-200 focus:ring-lime-400 focus:border-lime-400" required />
+                                    {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-1">E-mail</label>
+                                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-zinc-800 border border-zinc-700 rounded-md p-3 text-gray-200 focus:ring-lime-400 focus:border-lime-400" required />
+                                    {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-400 mb-1">Telefone (Opcional)</label>
+                                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-zinc-800 border border-zinc-700 rounded-md p-3 text-gray-200 focus:ring-lime-400 focus:border-lime-400" />
+                                </div>
+                                <div>
+                                    <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-1">Mensagem</label>
+                                    <textarea id="message" name="message" rows={4} value={formData.message} onChange={handleChange} className="w-full bg-zinc-800 border border-zinc-700 rounded-md p-3 text-gray-200 focus:ring-lime-400 focus:border-lime-400" required></textarea>
+                                    {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
+                                </div>
+                            </div>
+                            <button type="submit" disabled={status === 'submitting'} className="mt-6 w-full bg-lime-400 text-zinc-900 font-bold py-3 px-6 rounded-lg hover:bg-lime-300 transition-colors duration-300 disabled:bg-zinc-600 disabled:cursor-not-allowed">
+                                {status === 'submitting' ? 'Enviando...' : 'Enviar Mensagem'}
+                            </button>
+                        </form>
+                       )}
+                    </div>
                 </div>
-
-                <a 
-                    href={whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-4 bg-green-500 text-white font-bold py-4 px-10 rounded-lg text-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/30"
-                >
-                    <WhatsAppIcon className="w-8 h-8" />
-                    <span>Chamar no WhatsApp</span>
-                </a>
-
-                <p className="text-gray-500 mt-12">Atendemos toda São Paulo e Grande São Paulo.</p>
             </div>
+            
             <div className="bg-zinc-900 py-4">
-                <div className="max-w-[1200px] mx-auto px-6 text-center text-gray-500 text-sm">
-                    <p>&copy; {year} Trans Gonçalves - Munck e Guincho. Todos os direitos reservados.</p>
-                    <a href="/#/admin" className="text-zinc-700 hover:text-zinc-600 transition-colors text-xs mt-2 inline-block">Admin</a>
+                <div className="max-w-[1200px] mx-auto px-6 text-center text-gray-500 text-sm flex justify-between items-center">
+                   <p>&copy; {new Date().getFullYear()} Trans Gonçalves. Todos os direitos reservados.</p>
+                   <a href="/#/admin" className="hover:text-lime-400 transition-colors">Admin</a>
                 </div>
             </div>
         </footer>
