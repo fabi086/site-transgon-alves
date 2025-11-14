@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -40,7 +39,8 @@ const ContactFooter: React.FC = () => {
             </div>
             <div className="bg-zinc-900 py-4">
                 <div className="container mx-auto px-6 text-center text-gray-500 text-sm">
-                    &copy; {year} Trans Gonçalves - Munck e Guincho. Todos os direitos reservados.
+                    <p>&copy; {year} Trans Gonçalves - Munck e Guincho. Todos os direitos reservados.</p>
+                    <a href="/admin" className="text-zinc-700 hover:text-zinc-600 transition-colors text-xs mt-2 inline-block">Admin</a>
                 </div>
             </div>
         </footer>

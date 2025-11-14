@@ -37,10 +37,7 @@ const Header: React.FC = () => {
 
     const navLinks = [
         { href: '#services', label: 'Serviços' },
-        { href: '#about', label: 'Sobre Nós' },
         { href: '#gallery', label: 'Nossa Frota' },
-        { href: '#testimonials', label: 'Depoimentos' },
-        { href: '#faq', label: 'Dúvidas' },
         { href: '#contact', label: 'Contato' },
     ];
 
@@ -57,7 +54,7 @@ const Header: React.FC = () => {
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-6">
                     {navLinks.map(link => (
-                         <a key={link.href} href={link.href} className="text-gray-300 hover:text-lime-400 transition-colors duration-300 font-medium text-sm">
+                         <a key={link.href} href={link.href} className="text-gray-300 hover:text-lime-400 transition-colors duration-300 font-medium">
                             {link.label}
                         </a>
                     ))}
@@ -79,13 +76,13 @@ const Header: React.FC = () => {
                 </div>
 
                  {/* Mobile Nav */}
-                <div className={`fixed top-0 left-0 w-full h-screen bg-zinc-900 transition-transform duration-300 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden`}>
-                    <nav className="flex flex-col items-center justify-center h-full gap-6">
+                <div className={`absolute top-0 left-0 w-full h-screen bg-zinc-900 transition-transform duration-300 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden`}>
+                    <nav className="flex flex-col items-center justify-center h-full gap-8">
                         {navLinks.map(link => (
                             <a 
                                 key={link.href} 
                                 href={link.href} 
-                                className="text-2xl font-bold text-gray-300 hover:text-lime-400 transition-colors duration-300"
+                                className="text-3xl font-bold text-gray-300 hover:text-lime-400 transition-colors duration-300"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 {link.label}
