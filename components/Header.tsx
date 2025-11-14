@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const HookIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg xmlns="http://www.w.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M18 4v7a6 6 0 1 1-12 0V4"/>
         <circle cx="12" cy="4" r="2"/>
     </svg>
@@ -28,12 +28,10 @@ const Header: React.FC = () => {
     const phoneNumber = "5511941810939";
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento.")}`;
 
+    // Simplified navigation links
     const navLinks = [
         { href: '#services', label: 'Serviços' },
         { href: '#about', label: 'Sobre Nós' },
-        { href: '#gallery', label: 'Nossa Frota' },
-        { href: '#testimonials', label: 'Avaliações' },
-        { href: '#faq', label: 'Dúvidas' },
         { href: '#contact', label: 'Contato' },
     ];
 
@@ -45,36 +43,45 @@ const Header: React.FC = () => {
     return (
         <header className="bg-zinc-900/80 backdrop-blur-sm sticky top-0 z-50">
             <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
-                <a href="/#/" className="flex items-center gap-3 z-50" aria-label="Trans Gonçalves - Página Inicial">
-                    <HookIcon className="w-8 h-8 text-lime-400" />
-                    <span className="text-2xl font-bold tracking-tighter text-white">
-                        TG
-                    </span>
-                </a>
+                
+                {/* Left: Logo */}
+                <div className="flex-1 flex justify-start">
+                    <a href="/#/" className="flex items-center gap-3 z-50" aria-label="Trans Gonçalves - Página Inicial">
+                        <HookIcon className="w-8 h-8 text-lime-400" />
+                        <span className="text-2xl font-bold tracking-tighter text-white">
+                            TG
+                        </span>
+                    </a>
+                </div>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-6">
+                {/* Center: Desktop Nav */}
+                <nav className="hidden md:flex items-center gap-8">
                     {navLinks.map(link => (
-                         <a key={link.href} href={link.href} className="text-gray-300 hover:text-lime-400 transition-colors duration-300 font-medium">
+                         <a key={link.href} href={link.href} className="text-gray-300 hover:text-lime-400 transition-colors duration-300 font-medium text-lg">
                             {link.label}
                         </a>
                     ))}
+                </nav>
+
+                {/* Right: CTA & Mobile Menu Button */}
+                <div className="flex-1 flex justify-end items-center">
                     <a 
                         href={whatsappLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-lime-400 text-zinc-900 font-bold py-2 px-6 rounded-lg hover:bg-lime-300 transition-colors duration-300 transform hover:scale-105 ml-4"
+                        className="hidden md:block bg-lime-400 text-zinc-900 font-bold py-2 px-6 rounded-lg hover:bg-lime-300 transition-colors duration-300 transform hover:scale-105"
                     >
                         Orçamento Rápido
                     </a>
-                </nav>
 
-                {/* Mobile Menu Button */}
-                <div className="md:hidden z-50">
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Abrir menu">
-                        {isMenuOpen ? <XIcon className="w-8 h-8 text-white" /> : <MenuIcon className="w-8 h-8 text-white" />}
-                    </button>
+                    {/* Mobile Menu Button */}
+                    <div className="md:hidden z-50">
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Abrir menu">
+                            {isMenuOpen ? <XIcon className="w-8 h-8 text-white" /> : <MenuIcon className="w-8 h-8 text-white" />}
+                        </button>
+                    </div>
                 </div>
+
 
                  {/* Mobile Nav */}
                 <div className={`fixed top-0 left-0 w-full h-screen bg-zinc-900 transition-transform duration-300 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden`}>

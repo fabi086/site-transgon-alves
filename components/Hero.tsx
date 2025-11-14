@@ -20,7 +20,7 @@ const Hero: React.FC = () => {
 
     return (
         <section className="relative overflow-hidden min-h-[calc(100vh-80px)] flex items-center bg-zinc-900">
-            <div className="absolute inset-0 bg-cover bg-center opacity-10 transition-all duration-1000" style={{ backgroundImage: `url('${backgroundImage}')` }}></div>
+            <div className="absolute inset-0 bg-cover bg-center opacity-70 transition-all duration-1000" style={{ backgroundImage: `url('${backgroundImage}')` }}></div>
             <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/80 to-transparent"></div>
             
             <div className="max-w-[1200px] mx-auto px-6 relative z-10 flex">
