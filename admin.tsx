@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 interface ImageData {
@@ -35,7 +36,7 @@ const AdminPage: React.FC = () => {
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-black text-lime-400 uppercase tracking-tighter">Painel Administrativo</h1>
         <p className="text-lg text-gray-400 mt-2">Gerencie as imagens do seu site.</p>
-        <a href="/" className="text-lime-400 hover:text-lime-300 mt-4 inline-block">&larr; Voltar para o site</a>
+        <a href="/#/" className="text-lime-400 hover:text-lime-300 mt-4 inline-block">&larr; Voltar para o site</a>
       </div>
       
       <div className="bg-zinc-800 p-8 rounded-lg border border-zinc-700">

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ServicesSection from './components/ServicesSection';
@@ -9,9 +9,22 @@ import FloatingCTA from './components/FloatingCTA';
 import AdminPage from './admin';
 
 const App: React.FC = () => {
-  // Simple client-side routing to handle the admin page.
-  // This avoids server-side 404 errors on platforms like Vercel.
-  if (window.location.pathname.startsWith('/admin')) {
+  const [route, setRoute] = useState(window.location.hash);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setRoute(window.location.hash);
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
+
+  if (route === '#/admin') {
     return <AdminPage />;
   }
 
