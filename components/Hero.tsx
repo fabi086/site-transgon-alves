@@ -5,19 +5,21 @@ const Hero: React.FC = () => {
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para seus serviços.")}`;
 
     return (
-        <section className="relative overflow-hidden min-h-[calc(100vh-80px)] flex items-center bg-zinc-900">
-            {/* Changed image URL to a new host */}
+        <section className="relative overflow-hidden min-h-[calc(100vh-80px)] flex items-center bg-zinc-900 py-16 md:py-0">
+            {/* Image URL is correct. Deployment issues might stem from hosting provider restrictions (hotlinking). */}
             <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url('https://i.postimg.cc/QdYQZ1B5/trans-goncalves-munck-obra.jpg')" }}></div>
             <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/80 to-transparent"></div>
             
-            <div className="container mx-auto px-6 relative z-10 flex">
-                <div className="hidden md:flex items-center justify-center">
-                     <h1 className="text-lime-400 font-black text-6xl md:text-8xl uppercase [writing-mode:vertical-rl] transform -rotate-180 whitespace-nowrap select-none opacity-50 md:opacity-100">
+            <div className="container mx-auto px-6 relative z-10 flex items-center h-full">
+                {/* Vertical Text for All Screens */}
+                <div className="flex items-center justify-center mr-4 md:mr-8">
+                     <h1 className="text-lime-400 font-black text-6xl sm:text-7xl md:text-8xl uppercase [writing-mode:vertical-rl] transform -rotate-180 whitespace-nowrap select-none opacity-50">
                         Trans Gonçalves
                     </h1>
                 </div>
 
-                <div className="flex-1 flex flex-col justify-center items-start md:pl-16">
+                {/* Main Content */}
+                <div className="flex-1 flex flex-col justify-center items-start">
                     <div className="relative border-l-4 border-lime-400 pl-6 py-2">
                         <span className="absolute -top-4 -left-1 text-7xl text-lime-400/20 font-black select-none">“</span>
                         <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase text-white tracking-tighter leading-none">
