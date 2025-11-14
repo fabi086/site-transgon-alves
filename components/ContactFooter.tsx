@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -15,7 +14,7 @@ const ContactFooter: React.FC = () => {
 
     return (
         <footer id="contact" className="bg-zinc-800 border-t-4 border-lime-400">
-            <div className="container mx-auto px-6 py-16 text-center">
+            <div className="max-w-[1200px] mx-auto px-6 py-16 text-center">
                 <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Precisa de Ajuda?</h2>
                 <p className="text-lg text-gray-400 mt-2">Entre em contato conosco agora mesmo. Atendimento 24 horas!</p>
                 
@@ -39,7 +38,7 @@ const ContactFooter: React.FC = () => {
                 <p className="text-gray-500 mt-12">Atendemos toda São Paulo e Grande São Paulo.</p>
             </div>
             <div className="bg-zinc-900 py-4">
-                <div className="container mx-auto px-6 text-center text-gray-500 text-sm">
+                <div className="max-w-[1200px] mx-auto px-6 text-center text-gray-500 text-sm">
                     <p>&copy; {year} Trans Gonçalves - Munck e Guincho. Todos os direitos reservados.</p>
                     <a href="/#/admin" className="text-zinc-700 hover:text-zinc-600 transition-colors text-xs mt-2 inline-block">Admin</a>
                 </div>

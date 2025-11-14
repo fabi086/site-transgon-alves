@@ -32,7 +32,7 @@ const GallerySection: React.FC = () => {
 
     return (
         <section id="gallery" className="py-20 bg-zinc-900">
-            <div className="container mx-auto px-6">
+            <div className="max-w-[1200px] mx-auto px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Nossa Frota</h2>
                     <p className="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Equipamentos modernos e prontos para atender sua demanda.</p>

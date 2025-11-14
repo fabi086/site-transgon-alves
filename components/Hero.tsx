@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
             <div className="absolute inset-0 bg-cover bg-center opacity-10 transition-all duration-1000" style={{ backgroundImage: `url('${backgroundImage}')` }}></div>
             <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/80 to-transparent"></div>
             
-            <div className="container mx-auto px-6 relative z-10 flex">
+            <div className="max-w-[1200px] mx-auto px-6 relative z-10 flex">
                 <div className="flex items-center justify-center">
                      <h1 className="text-lime-400 font-black text-6xl md:text-8xl uppercase [writing-mode:vertical-rl] transform -rotate-180 whitespace-nowrap select-none opacity-50 md:opacity-100">
                         Trans Gonçalves

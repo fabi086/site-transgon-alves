@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 const CraneIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -43,7 +42,7 @@ const Header: React.FC = () => {
 
     return (
         <header className="bg-zinc-900/80 backdrop-blur-sm sticky top-0 z-50">
-            <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#" className="flex items-center gap-3 z-50">
                     <CraneIcon className="w-8 h-8 text-lime-400" />
                     <span className="text-2xl font-bold tracking-tighter text-white">

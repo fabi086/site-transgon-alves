@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const TowingIcon = ({ className = '' }) => (
@@ -57,7 +56,7 @@ const services = [
 const ServicesSection: React.FC = () => {
     return (
         <section id="services" className="py-20 bg-zinc-800">
-            <div className="container mx-auto px-6">
+            <div className="max-w-[1200px] mx-auto px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Nossos Serviços</h2>
                     <p className="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Oferecemos soluções completas para suas necessidades de transporte e içamento.</p>

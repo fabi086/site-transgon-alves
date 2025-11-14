@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 interface ImageData {
@@ -69,7 +68,7 @@ const AdminPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-12">
+    <div className="max-w-[1200px] mx-auto px-6 py-12">
        <div className="mb-8 text-center">
         <h1 className="text-4xl font-black text-lime-400 uppercase tracking-tighter">Painel Administrativo</h1>
         <p className="text-lg text-gray-400 mt-2">Gerencie as imagens do seu site de forma visual.</p>
