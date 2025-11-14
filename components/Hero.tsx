@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Hero: React.FC = () => {
-    const phoneNumber = "5511941810939";
+    const phoneNumber = "5511966887073";
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para seus serviços.")}`;
 
     const [backgroundImage, setBackgroundImage] = useState(""); // Start with empty
@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
             
             <div className="max-w-[1200px] mx-auto px-6 relative z-10 flex">
                 <div className="flex items-center justify-center">
-                     <h1 className="text-lime-400 font-black text-6xl md:text-8xl uppercase [writing-mode:vertical-rl] transform -rotate-180 whitespace-nowrap select-none opacity-50 md:opacity-100">
+                     <h1 className="text-lime-400 font-black text-6xl md:text-8xl uppercase [writing-mode:vertical-rl] transform -rotate-180 whitespace-nowrap select-none opacity-10">
                         Trans Gonçalves
                     </h1>
                 </div>
@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
                     <div className="relative border-l-4 border-lime-400 pl-6 py-2">
                         <span className="absolute -top-4 -left-1 text-7xl text-lime-400/20 font-black select-none">“</span>
                         <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase text-white tracking-tighter leading-none">
-                            Munck e Guincho
+                            Locação de Munck e Guincho
                         </h2>
                         <p className="text-lg md:text-2xl text-gray-300 mt-2">
                             Soluções em transporte e içamento.

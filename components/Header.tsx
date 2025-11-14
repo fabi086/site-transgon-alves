@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 
-const CraneIcon: React.FC<{ className?: string }> = ({ className }) => (
+const HookIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2v4"/>
-        <path d="M12 10v4"/>
-        <path d="M12 18v2"/>
-        <path d="M12 6H8.5a3.5 3.5 0 1 0 0 7H12"/>
-        <path d="M12 6h2a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4h-2"/>
-        <path d="M12 14h-2a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4h2"/>
-        <path d="M12 14h6a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-6"/>
-        <path d="M15 10a3 3 0 1 0-6 0 3 3 0 0 0 6 0Z"/>
+        <path d="M18 4v7a6 6 0 1 1-12 0V4"/>
+        <circle cx="12" cy="4" r="2"/>
     </svg>
 );
 
@@ -43,10 +37,10 @@ const Header: React.FC = () => {
     return (
         <header className="bg-zinc-900/80 backdrop-blur-sm sticky top-0 z-50">
             <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
-                <a href="#" className="flex items-center gap-3 z-50">
-                    <CraneIcon className="w-8 h-8 text-lime-400" />
+                <a href="#" className="flex items-center gap-3 z-50" aria-label="Trans Gonçalves - Página Inicial">
+                    <HookIcon className="w-8 h-8 text-lime-400" />
                     <span className="text-2xl font-bold tracking-tighter text-white">
-                        Trans Gonçalves
+                        TG
                     </span>
                 </a>
 

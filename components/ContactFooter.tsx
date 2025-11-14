@@ -7,8 +7,8 @@ const WhatsAppIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 const ContactFooter: React.FC = () => {
-    const phoneNumber = "5511941810939";
-    const displayPhoneNumber = "(11) 94181-0939";
+    const phoneNumber = "5511966887073";
+    const displayPhoneNumber = "(11) 96688-7073";
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent("Olá! Vi seu site e gostaria de um orçamento.")}`;
     const year = new Date().getFullYear();
 
